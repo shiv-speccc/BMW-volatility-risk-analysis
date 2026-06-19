@@ -10,8 +10,6 @@ A volatility forecasting and risk management project on BMW daily stock data (19
 
 Unlike price-forecasting projects (ARIMA/Prophet), this project answers a different and arguably more practically important question: **how risky is this asset going to be, and how much could I lose in a day?**
 
-![Price History](outputs/figures/price_history.png)
-
 ## Why this project is industry-relevant
 
 - **GARCH models are the actual standard** used in bank risk departments, hedge funds, and treasury/derivatives desks to forecast volatility and feed into regulatory capital calculations under the Basel III market risk framework.
@@ -43,22 +41,22 @@ The EGARCH model outperformed standard GARCH and GJR-GARCH on both AIC and BIC, 
 
 Lower AIC/BIC indicates a better fit. EGARCH wins on both criteria — its log-variance specification and asymmetric leverage term capture BMW's volatility dynamics more precisely than the symmetric GARCH baseline.
 
-**Conditional volatility (EGARCH fit):**
-![Conditional Volatility](outputs/figures/conditional_volatility.png)
+## Results & visualizations
 
-This is the model's estimate of day-by-day volatility across the full 30-year history — note the clear spikes around known market stress periods (2008 financial crisis, 2020 COVID crash), which is the kind of regime-sensitive behavior a static volatility assumption would completely miss.
+**1. Price history** — 30 years of BMW closing prices, the raw input to the analysis:
+![Price History](outputs/figures/price_history.png)
 
-<details>
-<summary>View supporting EDA plots</summary>
-
-**Volatility clustering** — squared returns showing the visual justification for GARCH modeling:
-![Volatility Clustering](outputs/figures/volatility_clustering.png)
-
-**Return distribution** — fat tails relative to a normal distribution:
+**2. Daily returns & distribution** — log returns show clear fat tails relative to a normal distribution (excess kurtosis of 4.64), which is exactly why this project uses Student-t errors instead of assuming normality:
 ![Returns Distribution](outputs/figures/returns_distribution.png)
 
-</details>
+**3. Volatility clustering** — squared returns make volatility clustering visually obvious: large moves are followed by more large moves, regardless of direction. This pattern is the entire reason GARCH-family models exist:
+![Volatility Clustering](outputs/figures/volatility_clustering.png)
 
+**4. Autocorrelation of squared returns** — statistically confirms what the chart above shows visually. Significant autocorrelation at almost every lag means past volatility predicts future volatility, validating the GARCH approach (a model with no volatility persistence would show no autocorrelation here):
+![ACF of Squared Returns](outputs/figures/acf_squared_returns.png)
+
+**5. Fitted conditional volatility (EGARCH)** — the model's day-by-day volatility estimate across the full 30-year history. Note the clear spikes around known market stress periods — 2008 financial crisis, 2020 COVID crash — which is exactly the kind of regime-sensitive behavior a static volatility assumption would completely miss:
+![Conditional Volatility](outputs/figures/conditional_volatility.png)
 
 ## Live dashboard
 
@@ -138,5 +136,5 @@ Python · pandas · NumPy · [`arch`](https://arch.readthedocs.io/) (GARCH model
 
 ## Author
 
-**Shivarchan Coomaran** — B.Tech CSE (Data Science), JAIN University
+**Shivarchan Coomaran** 
 [GitHub](https://github.com/shiv-speccc) · [LinkedIn](https://linkedin.com/in/shivarchan-coomaran-b47b14293)
