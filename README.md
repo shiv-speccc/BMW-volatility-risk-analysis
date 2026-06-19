@@ -33,6 +33,21 @@ Unlike price-forecasting projects (ARIMA/Prophet), this project answers a differ
 
 The EGARCH model outperformed standard GARCH and GJR-GARCH on both AIC and BIC, and the resulting VaR model passed its own statistical backtest — meaning the predicted risk levels matched real-world outcomes almost exactly over a 1,133-day held-out test period.
 
+### Model comparison
+
+| Model | AIC | BIC | Log-Likelihood |
+|---|---|---|---|
+| **EGARCH(1,1,1)** ✅ | **25900.16** | **25940.75** | **-12944.08** |
+| GJR-GARCH(1,1,1) | 25904.39 | 25944.98 | -12946.19 |
+| GARCH(1,1) | 25940.73 | 25974.57 | -12965.37 |
+
+Lower AIC/BIC indicates a better fit. EGARCH wins on both criteria — its log-variance specification and asymmetric leverage term capture BMW's volatility dynamics more precisely than the symmetric GARCH baseline.
+
+**Conditional volatility (EGARCH fit):**
+![Conditional Volatility](outputs/figures/conditional_volatility.png)
+
+This is the model's estimate of day-by-day volatility across the full 30-year history — note the clear spikes around known market stress periods (2008 financial crisis, 2020 COVID crash), which is the kind of regime-sensitive behavior a static volatility assumption would completely miss.
+
 <details>
 <summary>View supporting EDA plots</summary>
 
@@ -43,6 +58,7 @@ The EGARCH model outperformed standard GARCH and GJR-GARCH on both AIC and BIC, 
 ![Returns Distribution](outputs/figures/returns_distribution.png)
 
 </details>
+
 
 ## Live dashboard
 
