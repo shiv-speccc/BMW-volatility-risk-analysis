@@ -1,0 +1,20 @@
+{
+  "data_range": "1996-11-08 to 2026-04-30",
+  "n_observations": 7548,
+  "annualized_volatility_%": 33.418,
+  "excess_kurtosis": 4.638,
+  "adf_p_value": 0.0,
+  "best_model": "EGARCH(1,1,1)",
+  "var_95_1day_%": 2.029,
+  "var_99_1day_%": 3.281,
+  "es_95_1day_%": 2.829,
+  "backtest": {
+    "n_observations": 1133,
+    "n_breaches": 57,
+    "expected_breach_rate_%": 5.0,
+    "observed_breach_rate_%": 5.03,
+    "lr_statistic": 0.0022717840024597535,
+    "p_value": 0.9619846347372375,
+    "model_accepted_at_5%": "True"
+  }
+}
